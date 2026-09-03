@@ -1,9 +1,13 @@
-# Inventario de servidores Bitstreaming Radio Panel
-# ==================================================
-# Uso: ansible-playbook -i inventory.yml deploy.yml
+# Inventario de servidores Bitstreaming Radio Panel (PLANTILLA)
+# =============================================================
+# ⚠️ NO edites este archivo con datos reales.
+# Copia este archivo a "inventory.local.yml" y pon ahí tus datos reales.
+# "inventory.local.yml" está ignorado por git (no se sube al repo público).
 #
-# Para activar un servidor, quita el comentario (#) de su línea.
-# Para desactivarlo, vuelve a comentarlo.
+# Uso:
+#   cp inventory.example.yml inventory.local.yml
+#   # edita inventory.local.yml con tus datos reales
+#   ansible-playbook -i inventory.local.yml deploy.yml
 
 all:
   hosts:

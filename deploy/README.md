@@ -8,16 +8,28 @@ Este playbook despliega el fork **Bitstreaming Radio Panel** en tus servidores.
 - Llave SSH configurada en WSL para acceder a los servidores (usuario `ubuntu`)
 - La imagen ya construida en `ghcr.io/gasguti/bitstreaming-radio-panel:latest`
 
+## ⚠️ Inventario (seguridad)
+
+El inventario con tus datos reales **NO se sube al repo público**.
+
+```bash
+# Primera vez: crea tu inventario local desde la plantilla
+cp inventory.example.yml inventory.local.yml
+# Edita inventory.local.yml con tus datos reales (hosts, usuario, llave)
+```
+
+`inventory.local.yml` está en `.gitignore` — nunca se sube a GitHub.
+
 ## Uso
 
 Desde WSL, dentro de esta carpeta:
 
 ```bash
 # 1. Probar conexión a los servidores (solo azura1 por ahora)
-ansible -i inventory.yml all -m ping
+ansible -i inventory.local.yml all -m ping
 
 # 2. Desplegar (backup + cambiar imagen + pull + reload)
-ansible-playbook -i inventory.yml deploy.yml
+ansible-playbook -i inventory.local.yml deploy.yml
 ```
 
 ## Qué hace el playbook
@@ -30,7 +42,7 @@ ansible-playbook -i inventory.yml deploy.yml
 
 ## Activar el segundo servidor
 
-Cuando valides en `azura1`, descomenta el bloque `azura2` en `inventory.yml` y vuelve a ejecutar el playbook. Se desplegará en ambos.
+Cuando valides en `azura1`, descomenta el bloque `azura2` en `inventory.local.yml` y vuelve a ejecutar el playbook. Se desplegará en ambos.
 
 ## Rollback
 

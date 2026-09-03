@@ -18,6 +18,7 @@ tmp/cache/*---*
 /app/env.ini
 /app/.env
 /azuracast.env
+/deploy/inventory.local.yml
 /util/fixtures/*
 /util/fixtures/**/*
 !/util/fixtures/.gitkeep
