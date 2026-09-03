@@ -38,7 +38,7 @@ final class RestoreCommand extends AbstractDatabaseCommand
         $path = Types::stringOrNull($input->getArgument('path'), true);
         $startTime = microtime(true);
 
-        $io->title('AzuraCast Restore');
+        $io->title('Bitstreaming Radio Panel Restore');
 
         if (null === $path) {
             $filesRaw = glob(StorageLocation::DEFAULT_BACKUPS_PATH . '/*', GLOB_NOSORT) ?: [];

@@ -15,7 +15,7 @@
                     class="col-md-12"
                     :field="r$.backup_enabled"
                     :label="$gettext('Run Automatic Nightly Backups')"
-                    :description="$gettext('Enable to have AzuraCast automatically run nightly backups at the time specified.')"
+                    :description="$gettext('Enable to have Bitstreaming Radio Panel automatically run nightly backups at the time specified.')"
                 />
             </div>
 

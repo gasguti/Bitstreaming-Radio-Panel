@@ -46,8 +46,8 @@
                             <form-group-checkbox
                                 id="form_edit_hide_product_name"
                                 :field="r$.hide_product_name"
-                                :label="$gettext('Hide AzuraCast Branding on Public Pages')"
-                                :description="$gettext('If selected, this will remove the AzuraCast branding from public-facing pages.')"
+                                :label="$gettext('Hide Bitstreaming Radio Panel Branding on Public Pages')"
+                                :description="$gettext('If selected, this will remove the Bitstreaming Radio Panel branding from public-facing pages.')"
                             />
                         </div>
 
@@ -56,7 +56,7 @@
                             class="col-md-6"
                             :field="r$.homepage_redirect_url"
                             :label="$gettext('Homepage Redirect URL')"
-                            :description="$gettext('If a visitor is not signed in and visits the AzuraCast homepage, you can automatically redirect them to the URL specified here. Leave blank to redirect them to the login screen by default.')"
+                            :description="$gettext('If a visitor is not signed in and visits the Bitstreaming Radio Panel homepage, you can automatically redirect them to the URL specified here. Leave blank to redirect them to the login screen by default.')"
                         />
 
                         <form-group-field

@@ -41,7 +41,7 @@ final class UpdateCheck
 
         $router = $event->getRequest()->getRouter();
 
-        $actionLabel = __('Update AzuraCast');
+        $actionLabel = __('Update Bitstreaming Radio Panel');
         $actionUrl = $router->named('admin:updates:index');
 
         $releaseChannel = $this->version->getReleaseChannelEnum();
@@ -54,7 +54,7 @@ final class UpdateCheck
                 new Notification(
                     id: 'notification-update-new-stable',
                     title: __(
-                        'New AzuraCast Stable Release Available',
+                        'New Bitstreaming Radio Panel Stable Release Available',
                     ),
                     body: sprintf(
                         __(
@@ -76,7 +76,7 @@ final class UpdateCheck
                 $event->addNotification(
                     new Notification(
                         id: 'notification-update-new-rolling',
-                        title: __('New AzuraCast Rolling Release Available'),
+                        title: __('New Bitstreaming Radio Panel Rolling Release Available'),
                         body: sprintf(
                             __(
                                 'Your installation is currently %d update(s) behind the latest version. Updating is recommended.'

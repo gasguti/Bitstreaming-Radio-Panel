@@ -107,7 +107,7 @@ final class SetupController
             component: 'Setup/Register',
             id: 'setup-register',
             layout: 'minimal',
-            title: __('Set Up AzuraCast'),
+            title: __('Set Up Bitstreaming Radio Panel'),
             props: [
                 'csrf' => $csrf->generate('register'),
                 'error' => $error,

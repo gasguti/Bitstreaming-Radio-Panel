@@ -104,7 +104,7 @@ final class BackupCommand extends AbstractDatabaseCommand
 
         $filesToBackup = [];
 
-        $io->title(__('AzuraCast Backup'));
+        $io->title(__('Bitstreaming Radio Panel Backup'));
         $io->writeln(__('Please wait while a backup is generated...'));
 
         // Backup uploaded custom assets

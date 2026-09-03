@@ -32,10 +32,10 @@ final class DonateAdvisorCheck
         $event->addNotification(
             new Notification(
                 id: 'notification-donation',
-                title: __('AzuraCast is free and open-source software.'),
+title: __('Bitstreaming Radio Panel is free and open-source software.'),
                 body: __(
-                    'If you are enjoying AzuraCast, please consider donating to support our work. We depend ' .
-                    'on donations to build new features, fix bugs, and keep AzuraCast modern, accessible and free.',
+                    'If you are enjoying Bitstreaming Radio Panel, please consider donating to support our work. We depend ' .
+                    'on donations to build new features, fix bugs, and keep Bitstreaming Radio Panel modern, accessible and free.'
                 ),
                 type: FlashLevels::Info,
                 actionLabel: __('Donate to AzuraCast'),

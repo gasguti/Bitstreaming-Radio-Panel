@@ -23,7 +23,7 @@
             class="navbar-brand ms-0 me-auto"
             :to="{ name: 'dashboard' }"
         >
-            azura<strong>cast</strong>
+            Bitstreaming<strong>Radio Panel</strong>
             <small v-if="instanceName">{{ instanceName }}</small>
         </router-link>
 

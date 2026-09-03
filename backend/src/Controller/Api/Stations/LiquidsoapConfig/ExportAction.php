@@ -59,7 +59,7 @@ final readonly class ExportAction implements SingleActionInterface
         $event->prependLines([
             '# Liquidsoap Configuration Export',
             '# Exported ' . Time::nowUtc()->toAtomString(),
-            '# AzuraCast ' . $this->version->getVersionText(false),
+            '# Bitstreaming Radio Panel ' . $this->version->getVersionText(false),
             '# Liquidsoap ' . $this->liquidsoap->getVersion(),
         ]);
 

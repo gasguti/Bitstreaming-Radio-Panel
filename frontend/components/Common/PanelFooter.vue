@@ -4,7 +4,7 @@
         <a
             href="https://www.azuracast.com/"
             target="_blank"
-        >AzuraCast</a>
+        >Bitstreaming Radio Panel</a>
         &bull;
         <span v-html="version"/>
         &bull;

@@ -14,7 +14,7 @@
                             v-else
                             class="card-title text-center"
                         >
-                            {{ $gettext('Welcome to AzuraCast!') }}
+                            {{ $gettext('Welcome to Bitstreaming Radio Panel!') }}
                         </h2>
                         <h3
                             v-if="instanceName"

@@ -9,7 +9,7 @@
     >
         <p>
             {{
-                $gettext('This queue contains the remaining tracks in the order they will be queued by the AzuraCast AutoDJ (if the tracks are eligible to be played).')
+                $gettext('This queue contains the remaining tracks in the order they will be queued by the Bitstreaming Radio Panel AutoDJ (if the tracks are eligible to be played).')
             }}
         </p>
 

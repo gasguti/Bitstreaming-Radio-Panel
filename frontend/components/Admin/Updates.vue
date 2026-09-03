@@ -1,6 +1,6 @@
 <template>
     <h2 class="outside-card-header mb-1">
-        {{ $gettext('Update AzuraCast') }}
+        {{ $gettext('Update Bitstreaming Radio Panel') }}
     </h2>
 
     <loading :loading="propsLoading" lazy>
@@ -73,7 +73,7 @@
             <div class="col col-md-6">
                 <card-page
                     header-id="hdr_update_via_web"
-                    :title="$gettext('Update AzuraCast via Web')"
+                    :title="$gettext('Update Bitstreaming Radio Panel via Web')"
                 >
                     <template v-if="props && props.enableWebUpdates">
                         <div class="card-body">
@@ -231,7 +231,7 @@ const { showAlert } = useDialog();
 
 const doUpdate = async () => {
     const { value } = await showAlert({
-        title: $gettext("Update AzuraCast? Your installation will restart."),
+        title: $gettext("Update Bitstreaming Radio Panel? Your installation will restart."),
         confirmButtonText: $gettext("Update via Web"),
     });
 

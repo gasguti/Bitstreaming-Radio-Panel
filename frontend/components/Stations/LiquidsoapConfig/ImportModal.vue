@@ -16,7 +16,7 @@
                 </template>
                 <template #description>
                     {{
-                        $gettext('Import a file that was previously exported by this page, and AzuraCast will update any custom code sections with the custom code contained in your export file. Note that this will remove any existing code you have in these sections.')
+                        $gettext('Import a file that was previously exported by this page, and Bitstreaming Radio Panel will update any custom code sections with the custom code contained in your export file. Note that this will remove any existing code you have in these sections.')
                     }}
                 </template>
 

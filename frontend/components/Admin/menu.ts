@@ -68,7 +68,7 @@ export function useAdminMenu() {
                 },
                 {
                     key: "updates",
-                    label: $gettext("Update AzuraCast"),
+                    label: $gettext("Update Bitstreaming Radio Panel"),
                     url: {
                         name: "admin:updates:index",
                     },

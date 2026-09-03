@@ -11,7 +11,7 @@ $autoloader = require dirname(__DIR__, 2) . '/vendor/autoload.php';
 $environment = App\AppFactory::buildEnvironment();
 
 $console = new Symfony\Component\Console\Application(
-        'AzuraCast installer',
+        'Bitstreaming Radio Panel installer',
         App\Version::STABLE_VERSION
 );
 

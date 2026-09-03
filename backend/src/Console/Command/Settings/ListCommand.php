@@ -23,7 +23,7 @@ final class ListCommand extends CommandAbstract
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $io->title(__('AzuraCast Settings'));
+        $io->title(__('Bitstreaming Radio Panel Settings'));
 
         $headers = [
             __('Setting Key'),

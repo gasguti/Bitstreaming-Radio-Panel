@@ -116,7 +116,7 @@ export const useStationsWebhooksForm = defineStore(
                             url: "{{ station.listen_url }}",
                             author: "{{ live.streamer_name }}",
                             thumbnail: "{{ now_playing.song.art }}",
-                            footer: $gettext("Powered by AzuraCast"),
+                            footer: $gettext("Powered by Bitstreaming Radio Panel"),
                             color: "#2196F3",
                             include_timestamp: true,
                         },

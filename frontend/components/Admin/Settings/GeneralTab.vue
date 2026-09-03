@@ -18,8 +18,8 @@
                     id="edit_form_instance_name"
                     class="col-md-6"
                     :field="r$.instance_name"
-                    :label="$gettext('AzuraCast Instance Name')"
-                    :description="$gettext('This name will appear as a sub-header next to the AzuraCast logo, to help identify this server.')"
+                    :label="$gettext('Bitstreaming Radio Panel Instance Name')"
+                    :description="$gettext('This name will appear as a sub-header next to the Bitstreaming Radio Panel logo, to help identify this server.')"
                 />
 
                 <form-group-checkbox

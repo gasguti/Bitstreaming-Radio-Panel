@@ -93,7 +93,7 @@ final class Settings implements Stringable
     }
 
     #[
-        OA\Property(description: "AzuraCast Instance Name", example: "My AzuraCast Instance"),
+        OA\Property(description: "Bitstreaming Radio Panel Instance Name", example: "My Bitstreaming Radio Panel"),
         ORM\Column(length: 255, nullable: true),
         Serializer\Groups(self::GROUP_GENERAL)
     ]
@@ -296,7 +296,7 @@ final class Settings implements Stringable
     }
 
     #[
-        OA\Property(description: "Hide AzuraCast Branding on Public Pages", example: "false"),
+        OA\Property(description: "Hide Bitstreaming Radio Panel Branding on Public Pages", example: "false"),
         ORM\Column,
         Serializer\Groups(self::GROUP_BRANDING)
     ]
@@ -491,7 +491,7 @@ final class Settings implements Stringable
     public bool $mail_enabled = false;
 
     #[
-        OA\Property(description: "The name of the sender of system e-mails.", example: "AzuraCast"),
+        OA\Property(description: "The name of the sender of system e-mails.", example: "Bitstreaming Radio Panel"),
         ORM\Column(length: 255, nullable: true),
         Serializer\Groups(self::GROUP_GENERAL)
     ]

@@ -24,7 +24,7 @@ trait UsesWebAuthnTrait
             $router = $request->getRouter();
 
             $this->webAuthn = new WebAuthn(
-                $settings->instance_name ?? 'AzuraCast',
+                $settings->instance_name ?? 'Bitstreaming Radio Panel',
                 $router->getBaseUrl()->getHost()
             );
         }

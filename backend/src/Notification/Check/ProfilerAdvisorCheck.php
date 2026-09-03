@@ -35,7 +35,7 @@ final class ProfilerAdvisorCheck
                 id: 'notification-dev-spx',
                 title: __('The performance profiling extension is currently enabled on this installation.'),
                 body: __(
-                    'You can track the execution time and memory usage of any AzuraCast page or application ' .
+                    'You can track the execution time and memory usage of any Bitstreaming Radio Panel page or application ' .
                     'from the profiler page.',
                 ),
                 type: FlashLevels::Info,

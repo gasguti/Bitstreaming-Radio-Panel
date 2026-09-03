@@ -38,7 +38,7 @@
                 :field="r$.url"
                 input-type="url"
                 :label="$gettext('Web Site URL')"
-                :description="$gettext('Note: This should be the public-facing homepage of the radio station, not the AzuraCast URL. It will be included in broadcast details.')"
+                :description="$gettext('Note: This should be the public-facing homepage of the radio station, not the Bitstreaming Radio Panel URL. It will be included in broadcast details.')"
             />
 
             <div class="col-md-6">
