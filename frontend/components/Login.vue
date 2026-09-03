@@ -4,6 +4,12 @@
             <div class="card-body">
                 <div class="row mb-4">
                     <div class="col-sm">
+                        <img
+                            v-if="!hideProductName"
+                            :src="logoWhite"
+                            alt="Bitstreaming Radio Panel"
+                            class="login-logo"
+                        >
                         <h2
                             v-if="hideProductName"
                             class="card-title text-center"
@@ -147,6 +153,7 @@ import useWebAuthn, {
 import { useAxios } from "~/vendor/axios.ts";
 import IconIcEmail from "~icons/ic/baseline-email";
 import IconIcVpnKey from "~icons/ic/baseline-vpn-key";
+import logoWhite from "~/img/logo_white.png";
 
 const props = defineProps<{
     hideProductName: boolean;

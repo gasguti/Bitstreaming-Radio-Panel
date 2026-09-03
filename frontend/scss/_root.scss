@@ -1,6 +1,6 @@
 :root,
 [data-bs-theme="light"] {
-  --public-page-bg: url('~/img/hexbg.webp');
+  --public-page-bg: linear-gradient(160deg, #0a4f8a 0%, #1565c0 45%, #1e88e5 100%);
   --scrollbar-color: #{$gray-400};
 }
 
@@ -14,7 +14,7 @@
     color-scheme: light;
   }
 
-  --public-page-bg: url('~/img/hexbg_dark.webp');
+  --public-page-bg: linear-gradient(160deg, #0a3d6e 0%, #0a4f8a 45%, #1565c0 100%);
   --scrollbar-color: #{$gray-800};
   --bs-info-bg-subtle: #bbdefb;
   --bs-info-text-emphasis: #2C363D;

@@ -23,7 +23,11 @@
             class="navbar-brand ms-0 me-auto"
             :to="{ name: 'dashboard' }"
         >
-            Bitstreaming<strong>Radio Panel</strong>
+            <img
+                :src="logoWhite"
+                alt="Bitstreaming Radio Panel"
+                class="brand-logo"
+            >
             <small v-if="instanceName">{{ instanceName }}</small>
         </router-link>
 
@@ -157,6 +161,7 @@ import IconIcMenu from "~icons/ic/baseline-menu";
 import IconIcMenuOpen from "~icons/ic/baseline-menu-open";
 import IconIcSettings from "~icons/ic/baseline-settings";
 import IconIcSupport from "~icons/ic/baseline-support";
+import logoWhite from "~/img/logo_white.png";
 
 const { instanceName, logoutUrl } = useAzuraCastDashboardGlobals();
 

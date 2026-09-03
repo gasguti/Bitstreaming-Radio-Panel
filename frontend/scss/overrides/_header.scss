@@ -1,5 +1,5 @@
 header.navbar {
-  background-image: url('~/img/header_bg.webp'), linear-gradient(90deg, #0a6fc2 0%, #2196f3 100%);
+  background-image: url('~/img/header_bg.webp'), linear-gradient(90deg, #0a4f8a 0%, #1565c0 100%);
   background-position: top left, center;
   background-repeat: no-repeat;
   background-size: 500px 100px, cover;
@@ -17,6 +17,13 @@ header.navbar {
     align-items: baseline;
     text-shadow: 0 0 2px #000;
     padding: 0;
+
+    .brand-logo {
+      height: 3rem;
+      width: auto;
+      display: inline-block;
+      vertical-align: middle;
+    }
 
     b {
       font-weight: bold;

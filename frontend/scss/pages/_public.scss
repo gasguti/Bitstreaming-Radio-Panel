@@ -23,6 +23,13 @@ body.page-minimal {
         }
       }
 
+      .login-logo {
+        display: block;
+        margin: 0 auto 1rem;
+        max-width: 280px;
+        height: auto;
+      }
+
       @include media-breakpoint-only('xs') {
         width: 100%;
         margin-left: 15px;

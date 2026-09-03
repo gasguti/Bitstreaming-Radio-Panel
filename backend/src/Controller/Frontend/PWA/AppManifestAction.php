@@ -28,7 +28,7 @@ final class AppManifestAction implements SingleActionInterface
             'scope' => '/public/',
             'start_url' => '.',
             'display' => 'standalone',
-            'theme_color' => '#2196F3',
+            'theme_color' => '#1565C0',
             'categories' => [
                 'music',
             ],
