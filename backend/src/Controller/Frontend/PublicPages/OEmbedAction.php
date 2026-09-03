@@ -40,7 +40,7 @@ final class OEmbedAction implements SingleActionInterface
             ),
             'thumbnail_width' => 128,
             'thumbnail_height' => 128,
-            'provider_name' => 'Bitstreaming Radio Panel',
+            'provider_name' => 'Bitstreaming Radio',
             'provider_url' => 'https://azuracast.com/',
             'type' => 'rich',
             'width' => 400,

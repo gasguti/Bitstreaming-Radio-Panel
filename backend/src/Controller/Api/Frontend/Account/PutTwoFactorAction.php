@@ -60,7 +60,7 @@ final class PutTwoFactorAction implements SingleActionInterface
             $user = $request->getUser();
 
             $totp = TOTP::create($secret);
-            $totp->setLabel($user->email ?: 'Bitstreaming Radio Panel');
+            $totp->setLabel($user->email ?: 'Bitstreaming Radio');
 
             if (!empty($params['otp'])) {
                 if ($totp->verify($params['otp'], null, Auth::TOTP_WINDOW)) {

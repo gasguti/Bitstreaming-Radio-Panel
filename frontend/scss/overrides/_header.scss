@@ -1,8 +1,6 @@
 header.navbar {
-  background-image: url('~/img/header_bg.webp'), linear-gradient(90deg, #0a4f8a 0%, #1565c0 100%);
-  background-position: top left, center;
-  background-repeat: no-repeat;
-  background-size: 500px 100px, cover;
+  background-color: #0a4f8a;
+  background-image: none;
 
   min-height: $header-nav-height;
   padding: 1rem;
@@ -19,7 +17,7 @@ header.navbar {
     padding: 0;
 
     .brand-logo {
-      height: 3rem;
+      height: 4.5rem;
       width: auto;
       display: inline-block;
       vertical-align: middle;

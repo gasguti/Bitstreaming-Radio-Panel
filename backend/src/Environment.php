@@ -176,7 +176,7 @@ final class Environment
     {
         return Types::string(
             $this->data[self::APP_NAME] ?? null,
-            'Bitstreaming Radio Panel',
+            'Bitstreaming Radio',
             true
         );
     }

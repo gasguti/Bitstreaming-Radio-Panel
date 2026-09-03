@@ -22,7 +22,7 @@ final class AppManifestAction implements SingleActionInterface
         $customization = $request->getCustomization();
 
         $manifest = [
-            'name' => $station->name . ' - Bitstreaming Radio Panel',
+            'name' => $station->name . ' - Bitstreaming Radio',
             'short_name' => $station->name,
             'description' => $station->description,
             'scope' => '/public/',

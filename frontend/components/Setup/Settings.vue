@@ -9,7 +9,7 @@
                 <setup-step :step="3"/>
             </template>
             <template #cardTitle>
-                {{ $gettext('Customize Bitstreaming Radio Panel Settings') }}
+                {{ $gettext('Customize Bitstreaming Radio Settings') }}
             </template>
             <template #cardUpper>
                 <info-card>

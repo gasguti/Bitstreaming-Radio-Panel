@@ -95,7 +95,7 @@ enum SupportedLocales: string
 
     public static function default(): self
     {
-        return self::English;
+        return self::Spanish;
     }
 
     public static function getValidLocale(array|string|null $possibleLocales): self

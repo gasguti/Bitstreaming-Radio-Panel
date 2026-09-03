@@ -17,26 +17,31 @@ Esta guía explica cómo probar **Bitstreaming Radio Panel** en un entorno aisla
 2. Botón verde **Code** → pestaña **Codespaces** → **Create codespace on main**.
 3. Espera a que se cree (1-3 min). Se abrirá VS Code en la nube.
 
-### 2. Levantar la app (opción A: imagen ya construida)
+### 2. Levantar la app (modo producción: imagen ya construida)
 
-La imagen ya está construida en GHCR con cada push. Para probarla directamente:
+La imagen ya está construida en GHCR con cada push. Para probarla **exactamente como quedará en producción** (nada de modo dev):
 
 ```bash
-# Copiar config de desarrollo
-cp dev.env .env
-cp azuracast.dev.env azuracast.env
+# Copiar config de producción
+cp sample.env .env
+cp azuracast.sample.env azuracast.env   # ← producción (NO azuracast.dev.env)
 cp docker-compose.sample.yml docker-compose.yml
 
-# Levantar con la imagen de desarrollo (compila el código del repo)
-docker compose up -d --build
+# Prepara credenciales para primer arranque
+docker compose run --rm web azuracast:install
+
+# Levantar con la imagen de producción (la que va a azura1)
+docker compose up -d
 ```
+
+> ⚠️ **Muy importante:** usa OBLIGATORIAMENTE `azuracast.sample.env` (producción). Si usas `azuracast.dev.env` o `dev.env`, la app arranca en modo dev y busca el servidor Vite (`/static/vite_dist/js/...`), que no está corriendo → error 502 → "Loading..." eterno.
 
 ### 3. Ver la app
 
 1. Codespaces reenvía el puerto 80 automáticamente.
 2. Abre el navegador en la URL que te da Codespaces (o `http://localhost:80`).
 3. Verás el **login con tu logo** → "Welcome to Bitstreaming Radio Panel!".
-4. Entra con las credenciales de desarrollo (las de `azuracast.dev.env`).
+4. Completa el **First-Time Setup**: crea la cuenta de Super Administrador y sigue los pasos (igual que harás en producción).
 
 ### 4. Verificar el rebranding
 

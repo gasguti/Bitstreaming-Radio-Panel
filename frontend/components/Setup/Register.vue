@@ -12,11 +12,11 @@
                             id="hdr_first_time_setup"
                             class="card-title mb-0 text-center"
                         >
-                            {{ $gettext('Bitstreaming Radio Panel First-Time Setup') }}
+                            {{ $gettext('Bitstreaming Radio First-Time Setup') }}
                         </h2>
                         <h3 class="text-center">
                             <small class="text-muted">
-                                {{ $gettext('Welcome to Bitstreaming Radio Panel!') }}
+                                {{ $gettext('Welcome to Bitstreaming Radio!') }}
                             </small>
                         </h3>
                     </div>

@@ -25,7 +25,7 @@
         >
             <img
                 :src="logoWhite"
-                alt="Bitstreaming Radio Panel"
+                alt="Bitstreaming Radio"
                 class="brand-logo"
             >
             <small v-if="instanceName">{{ instanceName }}</small>

@@ -6,8 +6,8 @@
                     <div class="col-sm">
                         <img
                             v-if="!hideProductName"
-                            :src="logoWhite"
-                            alt="Bitstreaming Radio Panel"
+                            :src="logo"
+                            alt="Bitstreaming Radio"
                             class="login-logo"
                         >
                         <h2
@@ -20,7 +20,7 @@
                             v-else
                             class="card-title text-center"
                         >
-                            {{ $gettext('Welcome to Bitstreaming Radio Panel!') }}
+                            {{ $gettext('Welcome to Bitstreaming Radio!') }}
                         </h2>
                         <h3
                             v-if="instanceName"
@@ -153,7 +153,7 @@ import useWebAuthn, {
 import { useAxios } from "~/vendor/axios.ts";
 import IconIcEmail from "~icons/ic/baseline-email";
 import IconIcVpnKey from "~icons/ic/baseline-vpn-key";
-import logoWhite from "~/img/logo_white.png";
+import logo from "~/img/logo.png";
 
 const props = defineProps<{
     hideProductName: boolean;
