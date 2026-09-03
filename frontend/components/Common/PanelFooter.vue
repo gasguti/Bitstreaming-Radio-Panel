@@ -8,14 +8,7 @@
         &bull;
         <span v-html="version"/>
         &bull;
-        <span v-html="platform"/><br>
-        {{ $gettext('Like our software?') }}
-        <a
-            href="https://donate.azuracast.com/"
-            target="_blank"
-        >
-            {{ $gettext('Donate to support AzuraCast!') }}
-        </a>
+        <span v-html="platform"/>
     </footer>
 </template>
 
