@@ -1,0 +1,88 @@
+---
+# Playbook de despliegue: Bitstreaming Radio Panel
+# =================================================
+# Uso:
+#   ansible-playbook -i inventory.yml deploy.yml
+#
+# Qué hace (en orden):
+#   1. Backup completo de AzuraCast (base de datos + config)
+#   2. Cambia la imagen Docker del fork en docker-compose.yml
+#   3. Descarga la imagen nueva (docker compose pull)
+#   4. Recrea el contenedor (docker compose up -d) — SIN tocar datos
+#   5. Verifica que el panel responde
+#
+# Los datos (base de datos, música, config) viven en volumes Docker
+# y NO se tocan en ningún momento.
+
+- name: Desplegar Bitstreaming Radio Panel
+  hosts: all
+  gather_facts: yes
+  become: yes
+  vars:
+    # Nombre del archivo de backup (con fecha)
+    backup_name: "azuracast-backup-{{ ansible_date_time.date }}.zip"
+
+  tasks:
+    - name: "1. Crear backup completo de AzuraCast"
+      ansible.builtin.shell:
+        cmd: |
+          cd {{ azuracast_dir }}
+          ./docker.sh backup /var/azuracast/backups/{{ backup_name }}
+      register: backup_result
+      changed_when: backup_result.rc == 0
+      # Si el backup falla, abortamos TODO (no tocar nada sin respaldo)
+      failed_when: backup_result.rc != 0
+
+    - name: "2. Verificar que el backup existe"
+      ansible.builtin.stat:
+        path: "/var/azuracast/backups/{{ backup_name }}"
+      register: backup_file
+
+    - name: "3. Abortar si el backup no se creó"
+      ansible.builtin.fail:
+        msg: "El backup no se creó. Abortando despliegue."
+      when: not backup_file.stat.exists
+
+    - name: "4. Cambiar la imagen del fork en docker-compose.yml"
+      ansible.builtin.replace:
+        path: "{{ azuracast_dir }}/docker-compose.yml"
+        regexp: 'image:\s*["'']?ghcr\.io/azuracast/azuracast[^"''\n]*["'']?'
+        replace: 'image: "{{ image_name }}:{{ image_tag }}"'
+      register: compose_change
+
+    - name: "5. Descargar la imagen nueva (docker compose pull)"
+      ansible.builtin.command:
+        cmd: "docker compose pull"
+        chdir: "{{ azuracast_dir }}"
+      register: pull_result
+      changed_when: pull_result.rc == 0
+
+    - name: "6. Recrear el contenedor (docker compose up -d)"
+      ansible.builtin.command:
+        cmd: "docker compose up -d"
+        chdir: "{{ azuracast_dir }}"
+      register: up_result
+      changed_when: up_result.rc == 0
+
+    - name: "7. Esperar a que el contenedor arranque"
+      ansible.builtin.pause:
+        seconds: 15
+
+    - name: "8. Verificar que el panel responde"
+      ansible.builtin.uri:
+        url: "http://localhost/api/status"
+        status_code: 200
+        timeout: 30
+      register: health
+      retries: 5
+      delay: 10
+      until: health.status == 200
+      ignore_errors: yes
+
+    - name: "9. Mostrar resultado final"
+      ansible.builtin.debug:
+        msg: |
+          ✅ Despliegue completado en {{ inventory_hostname }}
+          - Backup: /var/azuracast/backups/{{ backup_name }}
+          - Imagen: {{ image_name }}:{{ image_tag }}
+          - Panel: {{ 'respondiendo OK' if health.status == 200 else 'NO responde aún (revisa docker logs azuracast)' }}

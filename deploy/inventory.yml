@@ -1,0 +1,26 @@
+# Inventario de servidores Bitstreaming Radio Panel
+# ==================================================
+# Uso: ansible-playbook -i inventory.yml deploy.yml
+#
+# Para activar un servidor, quita el comentario (#) de su línea.
+# Para desactivarlo, vuelve a comentarlo.
+
+all:
+  hosts:
+    azura1:
+      ansible_host: azura1.bitstreaming.net
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: ~/.ssh/id_ed25519
+      # Ruta de instalación de AzuraCast en el servidor
+      azuracast_dir: /var/azuracast
+      # Imagen Docker del fork (NO cambiar salvo que cambie el nombre del repo)
+      image_name: ghcr.io/gasguti/bitstreaming-radio-panel
+      image_tag: latest
+
+    # azura2:
+    #   ansible_host: azura2.bitstreaming.net
+    #   ansible_user: ubuntu
+    #   ansible_ssh_private_key_file: ~/.ssh/id_ed25519
+    #   azuracast_dir: /var/azuracast
+    #   image_name: ghcr.io/gasguti/bitstreaming-radio-panel
+    #   image_tag: latest
