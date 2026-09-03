@@ -1,0 +1,32 @@
+{
+  "name": "Bitstreaming Radio Panel Dev",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "Vue.volar",
+        "bmewburn.vscode-intelephense-client"
+      ]
+    }
+  },
+  "forwardPorts": [80, 443, 2022, 3306, 6025, 6379],
+  "portsAttributes": {
+    "80": {
+      "label": "AzuraCast HTTP",
+      "onAutoForward": "openBrowser"
+    },
+    "443": {
+      "label": "AzuraCast HTTPS"
+    },
+    "2022": {
+      "label": "SFTP"
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "remoteUser": "vscode"
+}
