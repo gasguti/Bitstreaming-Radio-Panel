@@ -1,0 +1,137 @@
+name: Build and Publish
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+  workflow_dispatch:
+    inputs:
+      no_cache:
+        description: 'Build without using cached Docker layers'
+        type: boolean
+        default: false
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  prepare:
+    name: Prepare Codebase
+    runs-on: ubuntu-latest
+    env:
+      APPLICATION_ENV: testing
+      NODE_ENV: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: intl, xdebug
+          tools: composer:v2, cs2pr
+
+      - name: Cache PHP dependencies
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: ${{ runner.OS }}-build-${{ hashFiles('composer.lock') }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/jod'
+          cache: 'npm'
+
+      - name: Set console permissions and clear static assets.
+        run: |
+          rm -rf web/static/vite_dist
+          rm -rf translations/*.UTF-8
+          chmod a+x backend/bin/*
+
+      - name: Run Composer install
+        run: |
+          composer install --no-interaction --ignore-platform-reqs
+
+      - name: Generate new translations from existing code.
+        run: |
+          npm ci --include=dev
+          backend/bin/console locale:generate
+
+      - name: Import locales, build static assets.
+        run: |
+          backend/bin/console locale:import
+          npm run build
+
+      - name: Build OpenAPI Docs
+        run: backend/bin/console azuracast:api:docs
+
+      - name: Write .gitinfo File
+        run: |
+          bash util/write_git_info.sh
+          chmod 777 .gitinfo
+
+      - name: Upload built static assets and translations
+        uses: actions/upload-artifact@v4
+        with:
+          name: assets
+          if-no-files-found: error
+          include-hidden-files: true
+          path: |
+            .gitinfo
+            translations
+            web/static/vite_dist
+            web/static/api/openapi.yml
+
+  build:
+    name: Build & Publish
+    needs: prepare
+    permissions:
+      contents: read
+      packages: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download built static assets from previous step
+        uses: actions/download-artifact@v4
+        with:
+          name: assets
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Docker Metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ghcr.io/${{ github.repository_owner }}/bitstreaming-radio-panel
+          flavor: |
+            latest=false
+          tags: |
+            type=raw,value=latest,enable=${{ endsWith(github.ref, github.event.repository.default_branch) }}
+            type=ref,event=branch
+            type=semver,pattern={{version}}
+
+      - name: Build and Publish
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          no-cache: ${{ github.event_name == 'workflow_dispatch' && inputs.no_cache }}
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

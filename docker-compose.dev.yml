@@ -1,6 +1,6 @@
 services:
   web:
-    image: ghcr.io/azuracast/azuracast:development
+    image: ghcr.io/gasguti/bitstreaming-radio-panel:development
     build:
       context: .
       target: development

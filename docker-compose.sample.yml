@@ -15,7 +15,7 @@ name: azuracast
 services:
   web:
     container_name: azuracast
-    image: "ghcr.io/azuracast/azuracast:${AZURACAST_VERSION:-latest}"
+    image: "ghcr.io/gasguti/bitstreaming-radio-panel:${AZURACAST_VERSION:-latest}"
     labels:
       - "com.centurylinklabs.watchtower.scope=azuracast"
     # Want to customize the HTTP/S ports? Follow the instructions here:
@@ -190,17 +190,6 @@ services:
       nofile:
         soft: 65536
         hard: 65536
-    logging:
-      options:
-        max-size: "1m"
-        max-file: "5"
-
-  updater:
-    container_name: azuracast_updater
-    image: ghcr.io/azuracast/updater:latest
-    restart: unless-stopped
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
     logging:
       options:
         max-size: "1m"

@@ -1,25 +1,5 @@
 name: Build, Test and Publish
 on:
-  pull_request:
-    branches:
-      - main
-  push:
-    paths-ignore:
-      - '*.md'
-      - '.github/*.yml'
-      - '.github/ISSUE_TEMPLATE/*.md'
-      - 'install.sh' # Ansible-only scripts and folders
-      - 'update.sh'
-      - 'util/ansible/**'
-    branches:
-      - ci-testing
-      - main
-      - stable
-      - 'dev-*'
-    tags:
-      - '*'
-  schedule:
-    - cron: '0 2 * * 0' # Weekly on Sundays at 02:00
   workflow_dispatch:
     inputs:
       no_cache:
