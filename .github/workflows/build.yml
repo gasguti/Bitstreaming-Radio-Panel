@@ -49,7 +49,9 @@ jobs:
       - name: Set console permissions and clear static assets.
         run: |
           rm -rf web/static/vite_dist
-          rm -rf translations/*.UTF-8
+          # NOTA: NO borramos translations/*.UTF-8. Upstream los borra porque
+          # los re-descarga de Crowdin en su release; este fork NO usa Crowdin:
+          # locale:import regenera los .php/.json desde los .po commiteados.
           chmod a+x backend/bin/*
 
       - name: Run Composer install
