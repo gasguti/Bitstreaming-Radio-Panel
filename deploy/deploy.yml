@@ -45,11 +45,24 @@
         msg: "No existe {{ azuracast_dir }}/azuracast.env. NO lo borres ni lo reemplaces: contiene tu configuración real."
       when: not app_env_file.stat.exists
 
-    - name: "1. Crear backup dentro del contenedor (comando directo, error visible)"
+    - name: "0e. Verificar espacio libre en disco (minimo 2 GB)"
+      ansible.builtin.shell:
+        cmd: "df --output=avail -BG {{ azuracast_dir }} | tail -1 | tr -d ' G'"
+      register: disk_free
+      changed_when: false
+
+    - name: "0f. Abortar si hay menos de 2 GB libres"
+      ansible.builtin.fail:
+        msg: "Solo hay {{ disk_free.stdout }} GB libres en {{ azuracast_dir }}. Libera espacio antes de desplegar."
+      when: disk_free.stdout | int < 2
+
+    - name: "1. Crear backup de BD y configuracion (SIN musica, comando directo, error visible)"
       ansible.builtin.command:
-        cmd: "docker exec --user azuracast azuracast azuracast_cli azuracast:backup /var/azuracast/backups/{{ backup_name }}"
+        cmd: "docker exec --user azuracast azuracast azuracast_cli azuracast:backup /var/azuracast/backups/{{ backup_name }} --exclude-media"
       register: backup_create
       changed_when: backup_create.rc == 0
+      # --exclude-media: la musica vive en volumenes Docker que NO se tocan en el
+      # despliegue; incluir media llenaria el disco. Solo respaldamos BD + config.
       # docker.sh backup enmascara fallos (exit 0 siempre); ejecutamos el comando
       # real directamente para ver el error si falla y confiar en el rc
       failed_when: backup_create.rc != 0
