@@ -95,7 +95,11 @@ enum SupportedLocales: string
 
     public static function default(): self
     {
-        return self::Spanish;
+        // NOTA: debe ser English — es el idioma de los strings del código fuente.
+        // Si se cambia, register() omite cargar traducciones para este idioma
+        // y la interfaz se muestra en inglés (strings crudos).
+        // Para "español por defecto", usar LANG=es_ES.UTF-8 en azuracast.env.
+        return self::English;
     }
 
     public static function getValidLocale(array|string|null $possibleLocales): self

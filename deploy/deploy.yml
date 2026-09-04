@@ -45,13 +45,25 @@
         msg: "No existe {{ azuracast_dir }}/azuracast.env. NO lo borres ni lo reemplaces: contiene tu configuración real."
       when: not app_env_file.stat.exists
 
-    - name: "0e. Verificar espacio libre en disco (minimo 2 GB)"
+    - name: "0e. Limpiar backups grandes antiguos del host (solo los generados por este playbook)"
+      ansible.builtin.shell:
+        cmd: "rm -f {{ azuracast_dir }}/backups/azuracast-backup-*.zip {{ azuracast_dir }}/backups/test-diagnostico.zip"
+      changed_when: false
+      failed_when: false
+
+    - name: "0f. Limpiar backups grandes antiguos del volumen de backups (dentro del contenedor)"
+      ansible.builtin.command:
+        cmd: "docker exec azuracast sh -c 'rm -f /var/azuracast/backups/azuracast-backup-*.zip /var/azuracast/backups/test-diagnostico.zip'"
+      changed_when: false
+      failed_when: false
+
+    - name: "0g. Verificar espacio libre en disco (minimo 2 GB)"
       ansible.builtin.shell:
         cmd: "df --output=avail -BG {{ azuracast_dir }} | tail -1 | tr -d ' G'"
       register: disk_free
       changed_when: false
 
-    - name: "0f. Abortar si hay menos de 2 GB libres"
+    - name: "0h. Abortar si hay menos de 2 GB libres"
       ansible.builtin.fail:
         msg: "Solo hay {{ disk_free.stdout }} GB libres en {{ azuracast_dir }}. Libera espacio antes de desplegar."
       when: disk_free.stdout | int < 2
@@ -97,10 +109,11 @@
       register: compose_change
 
     - name: "4b. Verificar que la imagen quedó cambiada"
-      ansible.builtin.command:
+      ansible.builtin.shell:
         cmd: "grep -q 'ghcr.io/azuracast/azuracast' docker-compose.yml && echo 1 || echo 0"
         chdir: "{{ azuracast_dir }}"
       register: image_check
+      changed_when: false
 
     - name: "4c. Abortar si la imagen sigue siendo la de AzuraCast"
       ansible.builtin.fail:
@@ -136,9 +149,8 @@
     - name: "5b. Detener el contenedor updater si sigue corriendo"
       ansible.builtin.command:
         cmd: "docker rm -f azuracast_updater"
-        changed_when: false
-        failed_when: false
-        ignore_errors: yes
+      changed_when: false
+      failed_when: false
 
     - name: "6. Descargar la imagen nueva (docker compose pull)"
       ansible.builtin.command:
