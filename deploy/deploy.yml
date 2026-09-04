@@ -63,15 +63,15 @@
     - name: "2b. Si no está en el host, verificar dentro del contenedor"
       ansible.builtin.command:
         cmd: "docker exec azuracast ls -la /var/azuracast/backups/{{ backup_name }}"
-        changed_when: false
-        failed_when: false
       register: backup_in_container
+      changed_when: false
+      failed_when: false
       when: not backup_file.stat.exists
 
     - name: "2c. Mover el backup del contenedor al host si hace falta"
       ansible.builtin.command:
         cmd: "docker cp azuracast:/var/azuracast/backups/{{ backup_name }} /var/azuracast/backups/{{ backup_name }}"
-        changed_when: false
+      changed_when: false
       when: not backup_file.stat.exists and backup_in_container.rc == 0
 
     - name: "3. Abortar si el backup no se creó (ni en host ni en contenedor)"
