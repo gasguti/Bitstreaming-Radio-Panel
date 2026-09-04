@@ -55,15 +55,29 @@
       # Si el backup falla, abortamos TODO (no tocar nada sin respaldo)
       failed_when: backup_result.rc != 0
 
-    - name: "2. Verificar que el backup existe"
+    - name: "2. Verificar que el backup existe en el host"
       ansible.builtin.stat:
         path: "/var/azuracast/backups/{{ backup_name }}"
       register: backup_file
 
-    - name: "3. Abortar si el backup no se creó"
+    - name: "2b. Si no está en el host, verificar dentro del contenedor"
+      ansible.builtin.command:
+        cmd: "docker exec azuracast ls -la /var/azuracast/backups/{{ backup_name }}"
+        changed_when: false
+        failed_when: false
+      register: backup_in_container
+      when: not backup_file.stat.exists
+
+    - name: "2c. Mover el backup del contenedor al host si hace falta"
+      ansible.builtin.command:
+        cmd: "docker cp azuracast:/var/azuracast/backups/{{ backup_name }} /var/azuracast/backups/{{ backup_name }}"
+        changed_when: false
+      when: not backup_file.stat.exists and backup_in_container.rc == 0
+
+    - name: "3. Abortar si el backup no se creó (ni en host ni en contenedor)"
       ansible.builtin.fail:
         msg: "El backup no se creó. Abortando despliegue."
-      when: not backup_file.stat.exists
+      when: not backup_file.stat.exists and backup_in_container.rc != 0
 
     - name: "4. Cambiar el repositorio de la imagen a tu fork (conservando el tag)"
       ansible.builtin.replace:
