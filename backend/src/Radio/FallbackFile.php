@@ -27,8 +27,10 @@ final class FallbackFile
 
     public function getDefaultFallbackPath(): string
     {
-        return $this->environment->isDocker()
-            ? '/usr/local/share/icecast/web/error.mp3'
-            : $this->environment->getBaseDirectory() . '/resources/error.mp3';
+        // BRP-FORK: fallback silencioso — resources/error.mp3 es un MP3 de
+        // silencio (27.6s, mismo formato que el original) para que radios nuevas
+        // sin autodj no reproduzcan el mensaje de error de Icecast. No eliminar
+        // en merge upstream.
+        return $this->environment->getBaseDirectory() . '/resources/error.mp3';
     }
 }

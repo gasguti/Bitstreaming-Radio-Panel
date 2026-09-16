@@ -3,3 +3,5 @@
 .run
 /node_modules
 /vendor
+DEPLOY.md
+TESTING.md

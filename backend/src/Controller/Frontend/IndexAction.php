@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controller\Frontend;
 
+use App\Container\EntityManagerAwareTrait;
 use App\Controller\SingleActionInterface;
+use App\Entity\Station;
+use App\Enums\StationPermissions;
 use App\Exception\Http\InvalidRequestAttribute;
 use App\Http\Response;
 use App\Http\ServerRequest;
@@ -12,6 +15,8 @@ use Psr\Http\Message\ResponseInterface;
 
 final class IndexAction implements SingleActionInterface
 {
+    use EntityManagerAwareTrait;
+
     public function __invoke(
         ServerRequest $request,
         Response $response,
@@ -27,6 +32,31 @@ final class IndexAction implements SingleActionInterface
         // Redirect to login screen if the user isn't logged in.
         try {
             $request->getUser();
+
+            // BRP-FORK: si el usuario tiene acceso a exactamente 1 estación,
+            // redirigir directo a su panel (/station/{id}) en vez del dashboard.
+            // No eliminar en merge upstream.
+            $acl = $request->getAcl();
+            $userStations = array_values(
+                array_filter(
+                    $this->em->getRepository(Station::class)->findBy([
+                        'is_enabled' => 1,
+                    ]),
+                    static fn(Station $station) => $acl->isAllowed(
+                        StationPermissions::View,
+                        $station->id
+                    )
+                )
+            );
+
+            if (1 === count($userStations)) {
+                return $response->withRedirect(
+                    $request->getRouter()->named(
+                        'stations:index:index',
+                        ['station_id' => $userStations[0]->id]
+                    )
+                );
+            }
 
             // Redirect to dashboard if no other custom redirection rules exist.
             return $response->withRedirect($request->getRouter()->named('dashboard'));

@@ -6,7 +6,9 @@ namespace App\Controller\Frontend\Account;
 
 use App\Container\EntityManagerAwareTrait;
 use App\Controller\SingleActionInterface;
+use App\Entity\Station;
 use App\Entity\User;
+use App\Enums\StationPermissions;
 use App\Exception\Http\RateLimitExceededException;
 use App\Http\Response;
 use App\Http\ServerRequest;
@@ -47,7 +49,7 @@ final class LoginAction implements SingleActionInterface
         }
 
         if ($auth->isLoggedIn()) {
-            return $response->withRedirect($request->getRouter()->named('dashboard'));
+            return $this->redirectAfterLogin($request, $response);
         }
 
         $flash = $request->getFlash();
@@ -106,9 +108,11 @@ final class LoginAction implements SingleActionInterface
                 );
 
                 $referrer = Types::stringOrNull($session->get('login_referrer'), true);
-                return $response->withRedirect(
-                    $referrer ?? $request->getRouter()->named('dashboard')
-                );
+                if (null !== $referrer) {
+                    return $response->withRedirect($referrer);
+                }
+
+                return $this->redirectAfterLogin($request, $response);
             }
 
             $flash->error(
@@ -138,5 +142,41 @@ final class LoginAction implements SingleActionInterface
                 'webAuthnUrl' => $router->named('account:webauthn'),
             ]
         );
+    }
+
+    /**
+     * BRP-FORK: redirección post-login. Si el usuario tiene acceso a
+     * exactamente 1 estación, enviarlo directo a su panel (/station/{id})
+     * en vez del dashboard. Con 0 o varias estaciones, comportamiento
+     * por defecto (dashboard). No eliminar en merge upstream.
+     */
+    private function redirectAfterLogin(
+        ServerRequest $request,
+        Response $response
+    ): ResponseInterface {
+        $acl = $request->getAcl();
+
+        $userStations = array_values(
+            array_filter(
+                $this->em->getRepository(Station::class)->findBy([
+                    'is_enabled' => 1,
+                ]),
+                static fn(Station $station) => $acl->isAllowed(
+                    StationPermissions::View,
+                    $station->id
+                )
+            )
+        );
+
+        if (1 === count($userStations)) {
+            return $response->withRedirect(
+                $request->getRouter()->named(
+                    'stations:index:index',
+                    ['station_id' => $userStations[0]->id]
+                )
+            );
+        }
+
+        return $response->withRedirect($request->getRouter()->named('dashboard'));
     }
 }

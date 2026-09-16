@@ -59,3 +59,16 @@ tmp/cache/*---*
 /plugins/*
 /plugins/**/*
 !/plugins/.gitkeep
+
+# Docs locales (no subir al repo público)
+/DEPLOY.md
+/TESTING.md
+/UPSTREAM_POLICY.md
+
+# Deploy interno (topología, hosts, estrategia)
+/deploy/deploy.yml
+/deploy/inventory.example.yml
+
+# Artefactos temporales de audio
+/resources/*.bak
+/resources/silence.mp3
