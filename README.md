@@ -15,7 +15,7 @@ Es un fork personalizado para Bitstreaming: mantiene toda la potencia de AzuraCa
 
 ## Despliegue
 
-Ver [DEPLOY.md](DEPLOY.md) para el flujo completo: probar en Codespace,
+Ver [DEPLOY.md](DEPLOY.md) para el flujo completo: probar en testing.bitstreaming.net,
 desplegar con Ansible en azura1, validar y luego azura2.
 
 ## Créditos
