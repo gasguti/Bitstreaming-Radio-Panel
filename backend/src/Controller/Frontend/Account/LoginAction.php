@@ -49,7 +49,7 @@ final class LoginAction implements SingleActionInterface
         }
 
         if ($auth->isLoggedIn()) {
-            return $this->redirectAfterLogin($request, $response);
+            return $this->redirectAfterLogin($request, $response, $auth->getUser());
         }
 
         $flash = $request->getFlash();
@@ -112,7 +112,7 @@ final class LoginAction implements SingleActionInterface
                     return $response->withRedirect($referrer);
                 }
 
-                return $this->redirectAfterLogin($request, $response);
+                return $this->redirectAfterLogin($request, $response, $user);
             }
 
             $flash->error(
@@ -149,10 +149,16 @@ final class LoginAction implements SingleActionInterface
      * exactamente 1 estación, enviarlo directo a su panel (/station/{id})
      * en vez del dashboard. Con 0 o varias estaciones, comportamiento
      * por defecto (dashboard). No eliminar en merge upstream.
+     *
+     * OJO: se recibe $user explícito porque en el POST de login el request
+     * aún trae ATTR_USER=null (el middleware GetCurrentUser corrió antes del
+     * authenticate) e isAllowed() siempre daría false. Con userAllowed() se
+     * evalúa al usuario recién autenticado.
      */
     private function redirectAfterLogin(
         ServerRequest $request,
-        Response $response
+        Response $response,
+        ?User $user = null
     ): ResponseInterface {
         $acl = $request->getAcl();
 
@@ -161,8 +167,9 @@ final class LoginAction implements SingleActionInterface
                 $this->em->getRepository(Station::class)->findBy([
                     'is_enabled' => 1,
                 ]),
-                static fn(Station $station) => $acl->isAllowed(
+                static fn(Station $station) => $acl->userAllowed(
                     StationPermissions::View,
+                    $user,
                     $station->id
                 )
             )
