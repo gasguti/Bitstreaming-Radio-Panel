@@ -308,6 +308,16 @@ return static function (RouteCollectorProxy $group) {
                 ->setName('api:admin:station:clone')
                 ->add(new Middleware\Permissions(GlobalPermissions::Stations));
 
+            // BRP-FORK: suspensión real para WHMCS (Station.is_enabled).
+            // No eliminar en merge upstream.
+            $group->post('/station/{id}/suspend', Controller\Api\Admin\Stations\SuspendAction::class)
+                ->setName('api:admin:station:suspend')
+                ->add(new Middleware\Permissions(GlobalPermissions::Stations));
+
+            $group->post('/station/{id}/unsuspend', Controller\Api\Admin\Stations\UnsuspendAction::class)
+                ->setName('api:admin:station:unsuspend')
+                ->add(new Middleware\Permissions(GlobalPermissions::Stations));
+
             $group->get(
                 '/stations/storage-locations',
                 Controller\Api\Admin\Stations\StorageLocationsAction::class
