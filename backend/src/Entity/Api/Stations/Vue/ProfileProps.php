@@ -38,7 +38,12 @@ class ProfileProps
         #[OA\Property]
         public string $frontendRelayPassword,
         #[OA\Property]
-        public ?int $frontendPort
+        public ?int $frontendPort,
+        // BRP-FORK: puerto DJ/Streamer (backend_config.dj_port) para mostrar
+        // en la página de la estación junto al puerto Icecast. No eliminar
+        // en merge upstream.
+        #[OA\Property]
+        public ?int $djPort
     ) {
     }
 }

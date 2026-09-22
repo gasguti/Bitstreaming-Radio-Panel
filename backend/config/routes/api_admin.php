@@ -318,6 +318,12 @@ return static function (RouteCollectorProxy $group) {
                 ->setName('api:admin:station:unsuspend')
                 ->add(new Middleware\Permissions(GlobalPermissions::Stations));
 
+            // BRP-FORK: provisioning WHMCS (estación + rol + usuario en una llamada).
+            // No eliminar en merge upstream.
+            $group->post('/whmcs/provision', Controller\Api\Admin\Stations\ProvisionAction::class)
+                ->setName('api:admin:whmcs:provision')
+                ->add(new Middleware\Permissions(GlobalPermissions::Stations));
+
             $group->get(
                 '/stations/storage-locations',
                 Controller\Api\Admin\Stations\StorageLocationsAction::class

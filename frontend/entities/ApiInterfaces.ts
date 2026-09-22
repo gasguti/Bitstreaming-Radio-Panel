@@ -1660,6 +1660,8 @@ export interface ApiStationsVueProfileProps {
     frontendSourcePassword: string;
     frontendRelayPassword: string;
     frontendPort: number | null;
+    /** BRP-FORK: puerto DJ/Streamer (regenerar vía genapi.mjs cuando el backend esté desplegado). */
+    djPort?: number | null;
 }
 
 export interface ApiStationsVueSftpUsersProps {

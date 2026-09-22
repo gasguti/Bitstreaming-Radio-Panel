@@ -57,7 +57,23 @@
                         </tr>
                         <tr class="align-middle">
                             <td>
-                                {{ $gettext('Port') }}
+                                {{ $gettext('DJ / Streamer Port') }}
+                            </td>
+                            <td
+                                class="ps-0"
+                                colspan="2"
+                            >
+                                {{ profileData.djPort }}
+                                <div class="form-text">
+                                    {{
+                                        $gettext('Connect your encoder or DJ software to this port for live broadcasts.')
+                                    }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="align-middle">
+                            <td>
+                                {{ $gettext('Broadcasting Service Port') }}
                             </td>
                             <td
                                 class="ps-0"

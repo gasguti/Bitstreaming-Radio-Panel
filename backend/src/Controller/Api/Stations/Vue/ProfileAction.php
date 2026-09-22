@@ -94,6 +94,13 @@ final class ProfileAction implements SingleActionInterface
                     : '',
                 frontendPort: $canManageBroadcasting
                     ? $frontendConfig->port
+                    : null,
+                // BRP-FORK: exponer el puerto DJ/Streamer (Liquidsoap) para
+                // mostrarlo en la página de la estación. Fallback a
+                // frontend+5, igual que Liquidsoap::getStreamPort().
+                // No eliminar en merge upstream.
+                djPort: $canManageBroadcasting
+                    ? ($station->backend_config->dj_port ?? (($frontendConfig->port ?? 8000) + 5))
                     : null
             )
         );
