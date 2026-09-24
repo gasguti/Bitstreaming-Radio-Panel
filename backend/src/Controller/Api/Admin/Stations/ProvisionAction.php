@@ -36,7 +36,7 @@ use Throwable;
                     ),
                     new OA\Property(
                         property: 'email',
-                        description: 'E-mail of the station owner (WHMCS client). Reused if it already exists.',
+                        description: 'E-mail of the station owner (WHMCS client). Must be unique (one user per station).',
                         type: 'string'
                     ),
                     new OA\Property(
@@ -144,6 +144,14 @@ final class ProvisionAction extends StationsController implements SingleActionIn
             }
 
             $station = $this->handleCreate($station);
+            $this->em->flush();
+
+            // BRP-FORK: arrancar la estación al crearla (equivale al botón
+            // "Iniciar Estación" / restart). Sin has_started=true,
+            // writeConfiguration aborta con "Station has not started yet"
+            // y la radio queda detenida. No eliminar en merge upstream.
+            $station->has_started = true;
+            $this->em->persist($station);
             $this->em->flush();
         } catch (Throwable $e) {
             return $response->withStatus(400)
