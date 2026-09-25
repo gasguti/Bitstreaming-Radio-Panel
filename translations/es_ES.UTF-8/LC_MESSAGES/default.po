@@ -1734,6 +1734,18 @@ msgstr "Nombre a Mostrar"
 msgid "DJ/Streamer Buffer Time (Seconds)"
 msgstr "Tiempo del Búfer del DJ/Streamer (segundos)"
 
+#: frontend/components/Stations/Profile/FrontendPanel.vue:60
+msgid "DJ / Streamer Port"
+msgstr "Puerto DJ / Streamer"
+
+#: frontend/components/Stations/Profile/FrontendPanel.vue:69
+msgid "Connect your encoder or DJ software to this port for live broadcasts."
+msgstr "Conecta tu encoder o software de DJ a este puerto para transmitir en vivo."
+
+#: frontend/components/Stations/Profile/FrontendPanel.vue:76
+msgid "Broadcasting Service Port"
+msgstr "Puerto del Servicio de Emisión"
+
 #: frontend/components/Admin/Settings/SecurityPrivacyTab.vue:136
 msgid "Do not collect any listener analytics"
 msgstr "No recopile ningún análisis de oyentes"
